@@ -5,4 +5,5 @@ public class DatasetParserMain {
         dsparse.getLinkMap();
         dsparse.findAllTopics("Employee Earnings");
     }
+    
 }
