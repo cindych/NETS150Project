@@ -9,6 +9,10 @@ public class DatasetParserMain {
         System.out.println("--------------");
         dsParser.findDescription("this should fail");
         System.out.println("--------------");
+        dsParser.matchKeyword("water");
+        System.out.println("--------------");
+        dsParser.matchKeywordUnderTopic("vending", "Food");
+        dsParser.findOrganizationAndPrintOthers("Vision Zero High Injury Network");
         
         DatasetParser dsparse = new DatasetParser();
         dsparse.getLinkMap();
