@@ -199,7 +199,7 @@ public class DatasetParser2 {
                 }
             }
 
-            // select last element and determine if there is a next page
+            // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
             }
@@ -238,7 +238,7 @@ public class DatasetParser2 {
                 }
             }
 
-            // select last element and determine if there is a next page
+            // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
             }
@@ -297,7 +297,7 @@ public class DatasetParser2 {
                 }
             }
 
-            // select last element and determine if there is a next page
+            // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
             }
