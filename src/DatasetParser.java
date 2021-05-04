@@ -5,6 +5,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.security.KeyStore.Entry;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DatasetParser {
     private String baseURL;
@@ -32,8 +34,20 @@ public class DatasetParser {
             String theURL = aTag.attr("href");
             String theTitle = aTag.text().toLowerCase();
             this.linkMap.put(theTitle, theURL);
-            // System.out.println(theTitle + " " + theURL);
+            //System.out.println(theTitle + " " + theURL);
         }
+    }
+
+    public HashMap<String, String> getTopicMap() {
+        HashMap<String, String> topicMap = new HashMap<String, String>();
+        Elements aTags = this.currentDoc.select(".dataset-heading > a"); // a with href
+        for (Element aTag: aTags) {
+            String theURL = aTag.attr("href");
+            String theTitle = aTag.text().toLowerCase();
+            topicMap.put(theTitle, theURL);
+            //System.out.println(theTitle + " " + theURL);
+        }
+        return topicMap;
     }
 
     /*
@@ -56,7 +70,6 @@ public class DatasetParser {
         Element head = this.currentDoc.selectFirst("head");
         Element title = head.selectFirst("title");
         this.currentURL = relevantURL; 
-        this.getLinkMap();
 
         return title.text();
     }
@@ -70,7 +83,6 @@ public class DatasetParser {
             System.out.println("Not able to get new page.");
         }
         this.currentURL = desiredURL;
-        this.getLinkMap();
     }
 
     public void initializeBaseDoc() {
@@ -83,9 +95,12 @@ public class DatasetParser {
     }
 
     public void findAllTopics(String datasetName) {
+        HashMap<String, String> topicMap = null;
+        initializeBaseDoc();
         String datasetNameLC = datasetName.toLowerCase();
         Elements topicsForDataset = null;
         getLinkPage("datasets");
+        getLinkMap();
         // System.out.println(this.currentDoc);
         /* while loop to go through all of the pages. Since we are just using this method in this manner, we can hardcode that there
          * 20 pages of datasets as of this moment on the site 
@@ -94,12 +109,14 @@ public class DatasetParser {
             if (this.currentURL.endsWith("dataset")) {
                 setLinkPage(this.currentURL + "?page="+ Integer.toString(i));
             } else if (this.currentURL.contains("page=")) {
-                this.currentURL = this.currentURL.substring(0, this.currentURL.length() - 1);
+                this.currentURL = this.currentURL.substring(0, this.currentURL.lastIndexOf("=")+1);
                 setLinkPage(this.currentURL + Integer.toString(i));
             }
-
-            if (this.linkMap.containsKey(datasetNameLC)) {
-                getLinkPage(datasetNameLC);
+            getLinkMap();
+            topicMap = getTopicMap();
+            if (topicMap.containsKey(datasetNameLC)) {
+                setLinkPage("https://www.opendataphilly.org" + topicMap.get(datasetNameLC));
+                getLinkMap();
                 Element topicTab = null;
                 Elements ulElements = this.currentDoc.select("ul");
                 for (Element ulElement: ulElements) {
@@ -129,6 +146,91 @@ public class DatasetParser {
             System.out.println(topic.text());
         }  
 
+    }
+
+    String matchMonths(int month) {
+        switch(month) {
+            case(1):
+              return ("January");
+            case(2):
+              return ("February");
+            case(3):
+              return ("March");
+            case(4):
+              return ("April");
+            case(5):
+              return ("May");
+            case(6):
+              return ("June");
+            case(7):
+              return ("July");
+            case(8):
+              return ("August");
+            case(9):
+              return ("September");
+            case(10):
+              return ("October");
+            case(11):
+              return ("November");
+            case(12):
+              return ("December");
+            default:
+              return ("month number entered is not valid");
+        }
+    }
+
+    void getSetsCreatedAtDate(String topic, int day, int month, int year) {
+       if (month < 1 || month > 12) {
+           System.out.println("invalid month entered.");
+           return;
+       } else if (day < 0 || day > 31) {
+        System.out.println("invalid day entered.");
+       } else if ((month == 9 || month == 4 || month == 6 || month == 11) && day > 30) {
+        System.out.println("invalid day for specific month entered.");
+        return;
+       } else if (month == 2) {
+           if ((year % 4 != 0 && day > 28) || (year%4==0 && day > 29)) {
+            System.out.println("invalid day in February for year entered.");
+            return;
+           }
+       }
+
+        System.out.println("The dataset(s) under the topic " + topic + " that were created on " 
+                 + matchMonths(month) +" " + day + " ," + year + " are: ");
+        initializeBaseDoc();
+
+        String topicLC = topic.toLowerCase();
+        getLinkPage(topicLC);
+        Elements pageNumbers = this.currentDoc.select(".pagination > li > a");
+        
+        int maxPage = Integer.valueOf(pageNumbers.get(pageNumbers.size() - 2).text());
+
+        for (int i = 1; i < maxPage + 1; i++) {
+            if (!this.currentURL.contains("page=")) {
+                setLinkPage(this.currentURL + "?page="+ Integer.toString(i));
+            } else {
+                this.currentURL = this.currentURL.substring(0, this.currentURL.lastIndexOf("=")+1);
+                setLinkPage(this.currentURL + Integer.toString(i));
+            }
+
+            getLinkMap();
+            HashMap<String, String> topicMap = getTopicMap();
+            Elements datasets = this.currentDoc.select(".dataset-heading > a");
+            for (Element dataset: datasets) {
+                setLinkPage("https://www.opendataphilly.org" + topicMap.get(dataset.text().toLowerCase()));
+               Element dateCreated = this.currentDoc.select(".automatic-local-datetime").get(0);
+               String pattern = "(\\d{4}+)-(\\d{2}+)-(\\d{2}+)*";
+               Pattern p = Pattern.compile(pattern);
+               Matcher m = p.matcher(dateCreated.toString());
+                if (!m.find()) {
+                     System.out.println("no 'Created' row in table.");
+                } else {
+                     if (year == Integer.valueOf(m.group(1)) && month == Integer.valueOf(m.group(2)) && day == Integer.valueOf(m.group(3))) {
+                         System.out.println(dataset.text());
+                    }
+                }
+            }
+        }
     }
 
 
