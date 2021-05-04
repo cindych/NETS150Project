@@ -18,6 +18,7 @@ public class DatasetParserMain {
         System.out.println("--------------");
         dsparse.getSetsCreatedAtDate("Arts / Culture / History", 8, 12, 2014);
         System.out.println("--------------");
+        // this shouldn't work
         dsparse.getSetsCreatedAtDate("Arts / Culture / History", 9, 13, 2014);
         System.out.println("--------------");
     }
