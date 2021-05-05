@@ -1,5 +1,4 @@
-Project Name: OpenDataPhilly Search+
-Project Members: Cindy Chen, Jada Harrison
+
 Description: This program was made to help users search for datasets and retrieve information for 
              particular datasets on https://www.opendataphilly.org/, a catalog of data in the
              Philadelphia region to complement the existing built-in search functionality! 
