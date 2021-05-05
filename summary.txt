@@ -1,0 +1,24 @@
+Project Name: OpenDataPhilly Search+
+Project Members: Cindy Chen, Jada Harrison
+
+Description: OpenDataPhilly Search+ is a program that allows users to go deeper in their search of https://www.opendataphilly.org/. 
+With OpenDataPhilly Search+, users are able to receive information in a more direct manner from the site in a variety
+of ways rather than searching through the pages of the site. OpenDataPhilly Search+ goes through the pages' HTML to 
+give the user more information about datasets, organizations, and even OpenDataPhilly itself. Some functionality requires
+inputs and some don't. With OpenDataPhilly Search+, users are able to get even more specific categorization/information. 
+
+Categories: World Wide Web (WWW)
+    -> We interacted directly with URLs and the World Wide Web, using JSoup and RegEx to parse and find HTML elements 
+       in order to collect information (web scraping) as needed from https://www.opendataphilly.org/ for our functions.
+
+Work Breakdown
+    -> Jada: DatasetParser.java + DatasetParserMain.java
+        - DatasetParser(), getLinkPage(), getLinkMap() - obtained from class files 
+        - setLinkPage(), setTopicMap() - inspired by their equivalents obtained from class files 
+        - Fully wrote all other DatasetParser.java methods 
+        - Wrote corresponding method calls in DatasetParserMain.java for to test methods' functionality
+
+    -> Cindy: DatasetParser2.java + DatasetParserMain.java
+        Aside from helper methods, implemented the following functions in DatasetParser2.java: 
+        listSetsInTopic, findDescription, matchKeyword, matchKeywordUnderTopic, 
+        findOrganizationAndPrintOthers
