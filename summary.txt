@@ -5,10 +5,11 @@ Description: This program was made to help users search for datasets and retriev
              particular datasets on https://www.opendataphilly.org/, a catalog of data in the
              Philadelphia region to complement the existing built-in search functionality! 
 
-             Its features among others include finding datasets created on a specific date, finding
+             Its features, among others, include finding datasets created on a specific date, finding
              datasets with a specific keyword in its title, retrieving information about the 
              description and topics of a dataset, and retrieving information about the organization 
-             of a dataset and all other datasets published by the organization. 
+             of a dataset and all other datasets published by the organization. Detailed information 
+             about the functionalities can be found in the user manual.
 
 Categories: World Wide Web (WWW)
     -> We interacted directly with URLs and the World Wide Web, using JSoup and RegEx to parse and find HTML elements 
@@ -22,6 +23,6 @@ Work Breakdown
         - Wrote corresponding method calls in DatasetParserMain.java for to test methods' functionality
 
     -> Cindy: DatasetParser2.java + DatasetParserMain.java
-        Aside from helper methods, implemented the following functions in DatasetParser2.java: 
-        listSetsInTopic, findDescription, matchKeyword, matchKeywordUnderTopic, 
-        findOrganizationAndPrintOthers
+        - DataParser2(), makesTopicMap() - obtained from class files (slightly altered)
+        - Fully wrote all other DatasetParser2.java methods, including helper methods
+        - Wrote corresponding method calls in DatasetParserMain.java to test functionality of methods

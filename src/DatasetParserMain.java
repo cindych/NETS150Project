@@ -7,13 +7,16 @@ public class DatasetParserMain {
         // System.out.println("--------------");
         // dsParser.findDescription("Leaf Collection Areas");
         // System.out.println("--------------");
-        // dsParser.findDescription("this should fail");
+        // dsParser.findDescription("unicorns"); // this should fail
         // System.out.println("--------------");
         // dsParser.matchKeyword("water");
         // System.out.println("--------------");
-        // dsParser.matchKeywordUnderTopic("vending", "Food");
+        // dsParser.matchKeywordUnderTopic("housing", "Budget / Finance");
+        // System.out.println("--------------");
+        // dsParser.findAllTags("Circuit Map");
         // System.out.println("--------------");
         // dsParser.findOrganizationAndPrintOthers("Vision Zero High Injury Network");
+        // System.out.println("--------------");
 
         DatasetParser dsparse = new DatasetParser();
         dsparse.getLinkMap();
@@ -40,9 +43,5 @@ public class DatasetParserMain {
         // System.out.println("--------------");
         // dsparse.grabPartners();
         // System.out.println("--------------");
-
-
-
-
     }
 }

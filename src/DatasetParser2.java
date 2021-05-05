@@ -94,7 +94,7 @@ public class DatasetParser2 {
      * returns null if dataset not found
      */
     private String findDatasetURL(String dataName) {
-        // go through each page until page is found or last page is reached
+        // go through each page until dataset is found or last page is reached
         boolean reachedLast = false;
         boolean foundDataset = false;
         String link = null; // initialize link to page for given dataset
@@ -247,6 +247,49 @@ public class DatasetParser2 {
         System.out.print("The datasets that have the keyword '" + keyword);
         System.out.println("' under topic " + topic + " are:\n" + list);
         return list;
+    }
+
+    /*
+     * Returns a list of all the tags for a given dataset
+     * and prints them
+     */
+    public List<String> findAllTags(String dataName) {
+        findDatasetsPage();
+        List<String> listOfTags = new ArrayList<String>();
+        Element allTags = null;
+
+        // go through each page until dataset is found or last page is reached
+        boolean reachedLast = false;
+        boolean foundDataset = false;
+        while (!reachedLast && !foundDataset) {
+            Elements datasets = addDoc.select(".dataset-item"); 
+            Elements aTags = datasets.select("div.dataset-content > h3 > a"); 
+            for (Element a : aTags) { // check if title matches 
+                if (a.text().contains(dataName)) {
+                    foundDataset = true; 
+                    Element liTag = a.parent().parent();
+                    allTags = liTag.nextElementSibling();
+                    break;
+                }
+            }
+
+            // if dataset has been found in prior step, skip over this 
+            if (!foundDataset) {
+                // select last element and determine if there is a next page
+                if (!loadNextPage()) {
+                    reachedLast = true;
+                    System.out.println("Dataset not found!");
+                    return listOfTags; 
+                }
+            }
+        }
+
+        for (Element tag : allTags.select("li")) { 
+            listOfTags.add(tag.text()); // add tags to list 
+        }
+        System.out.println("The tags for '" + dataName + "' are:");
+        System.out.println(listOfTags);
+        return listOfTags;
     }
 
     /*
