@@ -1,4 +1,4 @@
-Project Name: TODO
+Project Name: OpenDataPhilly Search+
 Project Members: Cindy Chen, Jada Harrison
 Description: This program was made to help users search for datasets and retrieve information for 
              particular datasets on https://www.opendataphilly.org/, a catalog of data in the
@@ -25,7 +25,29 @@ Description: This program was made to help users search for datasets and retriev
              findOrganizationAndPrintOthers: prints out the organization that published a 
                 specified dataset as well as other datasets published by same organization 
 
-             TODO 
+             findAllTopics: finds all the topics that a specific data set covers when once is already known
+                input(s): String topic, String datasetName
+                
+            getSetsCreatedAtDate: goes through the landing pages of the datasets within the specific topic requested and tells you which were 
+                created on the day specified. 
+                input(s): String topic, int day, int month, int year 
+                
+            getNumDatasetsContributed: gives user the number of datasets the organization they entered has contributed to OpenDataPhilly.org
+                input(s): String organization
+
+            getOrgMostDatasets: gives the organization that has contributed/has attributed to the highest number of datasets. 
+                input(s): none
+            
+            getNumDatasetsinTopic: gives user the number of datasets the topic entered has classified under it.
+                input(s): String topic
+            
+            getTopicMostDatasets: gives the topic with the highest number of datasets. 
+                input(s): none
+            
+            grabPartners: returns the partners of OpenDataPhilly that are on the About page
+                inputs(s): none
+
+
 
 Categories: World Wide Web (WWW)
     -> We interacted directly with URLs and the World Wide Web, using JSoup to parse and find HTML elements 
@@ -33,6 +55,10 @@ Categories: World Wide Web (WWW)
 
 Work Breakdown
     -> Jada: DatasetParser.java + DatasetParserMain.java
+        - DatasetParser(), getLinkPage(), getLinkMap() - obtained from class files 
+        - setLinkPage(), setTopicMap() - inspired by their equivalents obtained from class files 
+        - Fully wrote all other DatasetParser.java methods 
+        - Wrote corresponding method calls in DatasetParserMain.java for to test methods' functionality
 
     -> Cindy: DatasetParser2.java + DatasetParserMain.java
         Aside from helper methods, implemented the following functions in DatasetParser2.java: 
