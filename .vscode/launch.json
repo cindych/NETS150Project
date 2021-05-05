@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch DatasetParserMain",
+            "request": "launch",
+            "mainClass": "DatasetParserMain",
+            "projectName": "NETS150Project_5626a8e"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

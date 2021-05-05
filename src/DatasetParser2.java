@@ -246,7 +246,8 @@ public class DatasetParser2 {
 
     /*
      * Returns a list of all the tags for a given dataset
-     * and prints them
+     * and prints them. If dataset does not exist, prints
+     * out an error message
      */
     public List<String> findAllTags(String dataName) {
         findDatasetsPage();
