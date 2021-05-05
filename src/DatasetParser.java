@@ -24,7 +24,7 @@ public class DatasetParser {
         }
     }
 
-        /*
+    /*
      * Creates article map to be a mapping of article titles to url from our current doc
      */
     public void getLinkMap() {
@@ -38,6 +38,9 @@ public class DatasetParser {
         }
     }
 
+    /* 
+    * creates topic map to be map topics to their respective urls
+    */
     public HashMap<String, String> getTopicMap() {
         HashMap<String, String> topicMap = new HashMap<String, String>();
         Elements aTags = this.currentDoc.select(".dataset-heading > a"); // a with href
@@ -74,7 +77,9 @@ public class DatasetParser {
         return title.text();
     }
 
-    // setting link page will just be use for when traversing through the pages since they have a standard format
+    /*
+    * setting link page will just be use for when traversing through the pages since they have a standard format
+    */
     public void setLinkPage(String desiredURL) {
         try {
             this.currentDoc = Jsoup.connect(desiredURL).get();
@@ -85,6 +90,9 @@ public class DatasetParser {
         this.currentURL = desiredURL;
     }
 
+    /*
+    * method that is used to initialised to base url document and map before traversing the site
+    */
     public void initializeBaseDoc() {
         try {
             this.currentDoc = Jsoup.connect(this.baseURL).get();
@@ -94,6 +102,9 @@ public class DatasetParser {
         this.getLinkMap();
     }
 
+    /*
+    * method that returns the topics under which the inputted dataset is under 
+    */
     public void findAllTopics(String datasetName) {
         HashMap<String, String> topicMap = null;
         initializeBaseDoc();
@@ -101,7 +112,6 @@ public class DatasetParser {
         Elements topicsForDataset = null;
         getLinkPage("datasets");
         getLinkMap();
-        // System.out.println(this.currentDoc);
         /* while loop to go through all of the pages. Since we are just using this method in this manner, we can hardcode that there
          * 20 pages of datasets as of this moment on the site 
          */
@@ -114,13 +124,16 @@ public class DatasetParser {
             }
             getLinkMap();
             topicMap = getTopicMap();
+            //checks if the topic map for the page contains the desired dataset
             if (topicMap.containsKey(datasetNameLC)) {
                 setLinkPage("https://www.opendataphilly.org" + topicMap.get(datasetNameLC));
                 getLinkMap();
                 Element topicTab = null;
                 Elements ulElements = this.currentDoc.select("ul");
                 for (Element ulElement: ulElements) {
+                    //goes through the ul tag elements with the class nav nav-tabs
                     if (ulElement.className().equals("nav nav-tabs")) {
+                        //goes through the children li tags of them as this is where the topic tab for the dataset page is
                         Elements liElements = ulElement.select("li");
                         for (Element liElement: liElements) {
                              if (liElement.text().toLowerCase().contains("topic")) {
@@ -131,7 +144,7 @@ public class DatasetParser {
                         break;
                     }
                 }
-
+                // we have accessed the topic tab and now we move to it then capture the topics for the dataset under h3 tags
                 Element topicATag = topicTab.select("a").first();
                 String theURL = topicATag.attr("href");
                 theURL = "https://www.opendataphilly.org" + theURL;
@@ -148,6 +161,9 @@ public class DatasetParser {
 
     }
 
+    /*
+    * helper method to match the user's month entry to the actual word
+    */
     String matchMonths(int month) {
         switch(month) {
             case(1):
@@ -179,7 +195,11 @@ public class DatasetParser {
         }
     }
 
+    /* 
+    * method that returns all of the datasets under a specific topic that were created on the entered date
+    */
     void getSetsCreatedAtDate(String topic, int day, int month, int year) {
+        // ensures day and month variables are valid 
        if (month < 1 || month > 12) {
            System.out.println("invalid month entered.");
            return;
@@ -201,10 +221,12 @@ public class DatasetParser {
 
         String topicLC = topic.toLowerCase();
         getLinkPage(topicLC);
+
+        // obtains the maximum page number for the specific page then stores it
         Elements pageNumbers = this.currentDoc.select(".pagination > li > a");
-        
         int maxPage = Integer.valueOf(pageNumbers.get(pageNumbers.size() - 2).text());
 
+        //goes through each of the topic's pages 
         for (int i = 1; i < maxPage + 1; i++) {
             if (!this.currentURL.contains("page=")) {
                 setLinkPage(this.currentURL + "?page="+ Integer.toString(i));
@@ -215,10 +237,16 @@ public class DatasetParser {
 
             getLinkMap();
             HashMap<String, String> topicMap = getTopicMap();
+            // groups all the datasets on the page
             Elements datasets = this.currentDoc.select(".dataset-heading > a");
+
+            // goes through the datasets and opens each of their pages
             for (Element dataset: datasets) {
                 setLinkPage("https://www.opendataphilly.org" + topicMap.get(dataset.text().toLowerCase()));
+                // obtains the html tag that houses the date created
                Element dateCreated = this.currentDoc.select(".automatic-local-datetime").get(0);
+
+               // uses regex to create date pattern and find its match within the element 
                String pattern = "(\\d{4}+)-(\\d{2}+)-(\\d{2}+)*";
                Pattern p = Pattern.compile(pattern);
                Matcher m = p.matcher(dateCreated.toString());
@@ -233,10 +261,14 @@ public class DatasetParser {
         }
     }
 
+    /*
+    * method that returns the number of datasets an organization has contributed to OpenDataPhilly
+    */
     void numDatasetsContributed(String organization) {
         System.out.print(organization + " has contributed ");
         initializeBaseDoc();
         String organizationLC = organization.toLowerCase();
+        //opens up organization page 
         getLinkPage("organizations");
 
         Elements pageNumbers = this.currentDoc.select(".pagination > li > a");
@@ -250,7 +282,10 @@ public class DatasetParser {
                 setLinkPage(this.currentURL + Integer.toString(i));
             }
             getLinkMap();
+            // gets the elements that house each organization 
             Elements organisationTabs = this.currentDoc.select(".media-item");
+
+            //goes through each and extracts from the tag with the .count class the number of datasets attributed to the org
             for (Element organisationTab: organisationTabs) {
                 Element organizationName = organisationTab.select("h3").first();
                 if (organizationName.text().toLowerCase().equals(organizationLC)) {
@@ -263,6 +298,9 @@ public class DatasetParser {
         System.out.println(" dataset(s).");
     }
 
+    /*
+    *  method that goes through all the organizations and determines which contributes the most to opendataphilly 
+    */ 
     void getOrgMostDatasets() {
         int numDatasets = 0;
         String organization = null;
@@ -284,6 +322,8 @@ public class DatasetParser {
                 Element organizationName = organisationTab.select("h3").first();
                 Element countElement = organisationTab.select(".count").first();
                 int topicDatasetsNum = Integer.valueOf(countElement.text().substring(0, countElement.text().indexOf(" ")));
+
+                //if they organization we are at now currently has a higher count, then we replace the existing count with its and organization
                 if (topicDatasetsNum > numDatasets) {
                     numDatasets = topicDatasetsNum;
                     organization = organizationName.text();
@@ -293,6 +333,10 @@ public class DatasetParser {
         System.out.println("The organization that contributed the most datasets is " + organization + ", and it has " + numDatasets + " datasets.");
     }
 
+    
+    /*
+    * method that returns the number of datasets classified under a topic 
+    */
     void getNumDatasetsInTopic(String topic) {
         System.out.print(topic + " has ");
         initializeBaseDoc();
@@ -310,6 +354,9 @@ public class DatasetParser {
         System.out.println(" dataset(s).");
     }
 
+    /*
+    *  method that goes through all the topics and determines which has the most datasets
+    */ 
     void getTopicMostDatasets() {
         int numDatasets = 0;
         String topic = null;
@@ -329,6 +376,9 @@ public class DatasetParser {
         System.out.println("The topic with the most datasets is " + topic + ", and it has " + numDatasets + " datasets.");
     }
 
+    /* 
+    * grabs from the About tab all of opendataphilly's partners
+    */
     void grabPartners() {
         System.out.println("OpenDataPhilly's partners are: ");
         initializeBaseDoc();
