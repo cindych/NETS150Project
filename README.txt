@@ -49,19 +49,3 @@ Description: This program was made to help users search for datasets and retriev
 
 
 
-Categories: World Wide Web (WWW)
-    -> We interacted directly with URLs and the World Wide Web, using JSoup to parse and find HTML elements 
-       in order to collect information (web scraping) as needed from https://www.opendataphilly.org/ for our functions.
-
-Work Breakdown
-    -> Jada: DatasetParser.java + DatasetParserMain.java
-        - DatasetParser(), getLinkPage(), getLinkMap() - obtained from class files 
-        - setLinkPage(), setTopicMap() - inspired by their equivalents obtained from class files 
-        - Fully wrote all other DatasetParser.java methods 
-        - Wrote corresponding method calls in DatasetParserMain.java for to test methods' functionality
-
-    -> Cindy: DatasetParser2.java + DatasetParserMain.java
-        Aside from helper methods, implemented the following functions in DatasetParser2.java: 
-        listSetsInTopic, findDescription, matchKeyword, matchKeywordUnderTopic, 
-        findOrganizationAndPrintOthers
-    
