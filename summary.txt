@@ -1,11 +1,14 @@
 Project Name: OpenDataPhilly Search+
 Project Members: Cindy Chen, Jada Harrison
 
-Description: OpenDataPhilly Search+ is a program that allows users to go deeper in their search of https://www.opendataphilly.org/. 
-With OpenDataPhilly Search+, users are able to receive information in a more direct manner from the site in a variety
-of ways rather than searching through the pages of the site. OpenDataPhilly Search+ goes through the pages' HTML to 
-give the user more information about datasets, organizations, and even OpenDataPhilly itself. Some functionality requires
-inputs and some don't. With OpenDataPhilly Search+, users are able to get even more specific categorization/information. 
+Description: This program was made to help users search for datasets and retrieve information for 
+             particular datasets on https://www.opendataphilly.org/, a catalog of data in the
+             Philadelphia region to complement the existing built-in search functionality! 
+
+             Its features among others include finding datasets created on a specific date, finding
+             datasets with a specific keyword in its title, retrieving information about the 
+             description and topics of a dataset, and retrieving information about the organization 
+             of a dataset and all other datasets published by the organization. 
 
 Categories: World Wide Web (WWW)
     -> We interacted directly with URLs and the World Wide Web, using JSoup and RegEx to parse and find HTML elements 
