@@ -33,7 +33,6 @@ public class DatasetParser2 {
     public void makeTopicsMap() {
     	this.topics = new HashMap<String, String>();
     	Elements anchors = this.mainDoc.select(".browse-topic").select("a");
-		
     	for (Element x : anchors) {
     		String link = x.attr("href"); 
     		String topic = x.text();
@@ -65,7 +64,7 @@ public class DatasetParser2 {
     /*
      * Helper method
      * returns true if next page was successfully loaded,
-     * false otherise
+     * false otherise (indicating no next page)
      */
     private boolean loadNextPage() {
         Elements pageNum = addDoc.select(".pagination > li");
@@ -108,10 +107,9 @@ public class DatasetParser2 {
                     break;
                 }
             }
-
             // if dataset has been found in prior step, skip over this 
             if (!foundDataset) {
-                // select last element and determine if there is a next page
+                // determine if there is a next page
                 if (!loadNextPage()) {
                     reachedLast = true;
                 }
@@ -143,8 +141,7 @@ public class DatasetParser2 {
             for (Element a : anchors) { // add each title to list
                 list.add(a.text());
             }
-
-            // select last element and determine if there is a next page
+            // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
             }
@@ -198,7 +195,6 @@ public class DatasetParser2 {
                     list.add(a.text());
                 }
             }
-
             // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
@@ -237,7 +233,6 @@ public class DatasetParser2 {
                     list.add(a.text());
                 }
             }
-
             // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
@@ -272,10 +267,9 @@ public class DatasetParser2 {
                     break;
                 }
             }
-
             // if dataset has been found in prior step, skip over this 
             if (!foundDataset) {
-                // select last element and determine if there is a next page
+                // determine if there is a next page
                 if (!loadNextPage()) {
                     reachedLast = true;
                     System.out.println("Dataset not found!");
@@ -339,7 +333,6 @@ public class DatasetParser2 {
                     list.add(a.text());
                 }
             }
-
             // determine if there is a next page
             if (!loadNextPage()) {
                 reachedLast = true;
