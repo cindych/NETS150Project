@@ -196,7 +196,7 @@ public class DatasetParser {
        }
 
         System.out.println("The dataset(s) under the topic " + topic + " that were created on " 
-                 + matchMonths(month) +" " + day + " ," + year + " are: ");
+                 + matchMonths(month) +" " + day + ", " + year + " are: ");
         initializeBaseDoc();
 
         String topicLC = topic.toLowerCase();
@@ -233,5 +233,110 @@ public class DatasetParser {
         }
     }
 
+    void numDatasetsContributed(String organization) {
+        System.out.print(organization + " has contributed ");
+        initializeBaseDoc();
+        String organizationLC = organization.toLowerCase();
+        getLinkPage("organizations");
+
+        Elements pageNumbers = this.currentDoc.select(".pagination > li > a");
+        
+        int maxPage = Integer.valueOf(pageNumbers.get(pageNumbers.size() - 2).text());
+        for (int i = 1; i < maxPage + 1; i++) {
+            if (!this.currentURL.contains("page=")) {
+                setLinkPage(this.currentURL + "?q=&sort=&page="+ Integer.toString(i));
+            } else {
+                this.currentURL = this.currentURL.substring(0, this.currentURL.lastIndexOf("=")+1);
+                setLinkPage(this.currentURL + Integer.toString(i));
+            }
+            getLinkMap();
+            Elements organisationTabs = this.currentDoc.select(".media-item");
+            for (Element organisationTab: organisationTabs) {
+                Element organizationName = organisationTab.select("h3").first();
+                if (organizationName.text().toLowerCase().equals(organizationLC)) {
+                    Element countElement = organisationTab.select(".count").first();
+                    System.out.print(countElement.text().substring(0, countElement.text().indexOf(" ")));
+                }
+            }
+
+        }
+        System.out.println(" dataset(s).");
+    }
+
+    void getOrgMostDatasets() {
+        int numDatasets = 0;
+        String organization = null;
+        initializeBaseDoc();
+        getLinkPage("organizations");
+
+        Elements pageNumbers = this.currentDoc.select(".pagination > li > a");
+        
+        int maxPage = Integer.valueOf(pageNumbers.get(pageNumbers.size() - 2).text());
+        for (int i = 1; i < maxPage + 1; i++) {
+            if (!this.currentURL.contains("page=")) {
+                setLinkPage(this.currentURL + "?q=&sort=&page="+ Integer.toString(i));
+            } else {
+                this.currentURL = this.currentURL.substring(0, this.currentURL.lastIndexOf("=")+1);
+                setLinkPage(this.currentURL + Integer.toString(i));
+            }
+            Elements organisationTabs = this.currentDoc.select(".media-item");
+            for (Element organisationTab: organisationTabs) {
+                Element organizationName = organisationTab.select("h3").first();
+                Element countElement = organisationTab.select(".count").first();
+                int topicDatasetsNum = Integer.valueOf(countElement.text().substring(0, countElement.text().indexOf(" ")));
+                if (topicDatasetsNum > numDatasets) {
+                    numDatasets = topicDatasetsNum;
+                    organization = organizationName.text();
+                }
+            }
+        }
+        System.out.println("The organization that contributed the most datasets is " + organization + ", and it has " + numDatasets + " datasets.");
+    }
+
+    void getNumDatasetsInTopic(String topic) {
+        System.out.print(topic + " has ");
+        initializeBaseDoc();
+        String topicLC = topic.toLowerCase();
+        getLinkPage("topics");
+        Elements topicTabs = this.currentDoc.select(".media-item");
+        for (Element topicTab: topicTabs) {
+            Element topicName = topicTab.select("h3").first();
+            if (topicName.text().toLowerCase().equals(topicLC)) {
+                Element countElement = topicTab.select(".count").first();
+                System.out.print(countElement.text().substring(0, countElement.text().indexOf(" ")));
+            }
+        }
+        
+        System.out.println(" dataset(s).");
+    }
+
+    void getTopicMostDatasets() {
+        int numDatasets = 0;
+        String topic = null;
+        initializeBaseDoc();
+        getLinkPage("topics");
+        Elements topicTabs = this.currentDoc.select(".media-item");
+        for (Element topicTab: topicTabs) {
+            Element topicName = topicTab.select("h3").first();
+            Element countElement = topicTab.select(".count").first();
+            int topicDatasetsNum = Integer.valueOf(countElement.text().substring(0, countElement.text().indexOf(" ")));
+            if (topicDatasetsNum > numDatasets) {
+                numDatasets = topicDatasetsNum;
+                topic = topicName.text();
+            }
+        }
+
+        System.out.println("The topic with the most datasets is " + topic + ", and it has " + numDatasets + " datasets.");
+    }
+
+    void grabPartners() {
+        System.out.println("OpenDataPhilly's partners are: ");
+        initializeBaseDoc();
+        getLinkPage("about");
+        Elements partners = this.currentDoc.select("img + a");
+        for (Element partner: partners) {
+            System.out.println(partner.text());
+        }
+    }
 
 }

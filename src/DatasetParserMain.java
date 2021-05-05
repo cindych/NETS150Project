@@ -26,5 +26,23 @@ public class DatasetParserMain {
         // // this shouldn't work
         // dsparse.getSetsCreatedAtDate("Arts / Culture / History", 9, 13, 2014);
         // System.out.println("--------------");
+        //dsparse.numDatasetsContributed("NOAA");
+        // System.out.println("--------------");
+        // dsparse.numDatasetsContributed("PhiladelphiaDANCE.org");
+        // System.out.println("--------------");
+        // dsparse.numDatasetsContributed("School District of Philadelphia");
+        // System.out.println("--------------");
+        // dsparse.getNumDatasetsInTopic("elections / politics");
+        System.out.println("--------------");
+        dsparse.getOrgMostDatasets();
+        System.out.println("--------------");
+        dsparse.getTopicMostDatasets();
+        System.out.println("--------------");
+        dsparse.grabPartners();
+        System.out.println("--------------");
+
+
+
+
     }
 }
