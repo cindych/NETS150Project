@@ -20,9 +20,9 @@ Work Breakdown
         - DatasetParser(), getLinkPage(), getLinkMap() - obtained from class files 
         - setLinkPage(), setTopicMap() - inspired by their equivalents obtained from class files 
         - Fully wrote all other DatasetParser.java methods 
-        - Wrote corresponding method calls in DatasetParserMain.java for to test methods' functionality
+        - Wrote corresponding method calls in DatasetParserMain.java to test methods' functionality
 
     -> Cindy: DatasetParser2.java + DatasetParserMain.java
-        - DataParser2(), makesTopicMap() - obtained from class files (slightly altered)
+        - DatasetParser2(), makesTopicMap() - obtained from class files (slightly altered)
         - Fully wrote all other DatasetParser2.java methods, including helper methods
         - Wrote corresponding method calls in DatasetParserMain.java to test functionality of methods
