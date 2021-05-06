@@ -7,7 +7,7 @@ public class DatasetParserMain {
         // System.out.println("--------------");
         // dsParser.findDescription("Leaf Collection Areas");
         // System.out.println("--------------");
-        // System.out.println("(* Trying a keyword that should bring no results *)");
+        // System.out.println("(* Trying a name that should fail *)");
         // dsParser.findDescription("unicorns"); // this should fail
         // System.out.println("--------------");
         // dsParser.matchKeyword("water");
