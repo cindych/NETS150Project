@@ -201,8 +201,12 @@ public class DatasetParser2 {
             }
         }
 
-        System.out.println("The datasets that have the keyword '" + keyword + "' are:");
-        System.out.println(list);
+        if (list.isEmpty()) {
+            System.out.println("No datasets that match this keyword! :(");
+        } else {
+            System.out.println("The datasets that have the keyword '" + keyword + "' are:");
+            System.out.println(list);
+        }
         return list;
     }
 
@@ -239,8 +243,12 @@ public class DatasetParser2 {
             }
         }
 
-        System.out.print("The datasets that have the keyword '" + keyword);
-        System.out.println("' under topic " + topic + " are:\n" + list);
+        if (list.isEmpty()) {
+            System.out.println("No datasets that match this keyword! :(");
+        } else {
+            System.out.print("The datasets that have the keyword '" + keyword);
+            System.out.println("' under topic " + topic + " are:\n" + list);
+        }
         return list;
     }
 
@@ -344,8 +352,8 @@ public class DatasetParser2 {
             System.out.println("No other datasets! :(");
         }
         else {
-            System.out.println("There are " + list.size() + " other datasets");
-            System.out.println("Other datasets under the organization:");
+            System.out.println("There are a total of " + list.size() + " other datasets.");
+            System.out.println("\nOther datasets under the organization:");
             System.out.println(list);
         }
         return list;

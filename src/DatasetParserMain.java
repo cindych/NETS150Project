@@ -7,15 +7,22 @@ public class DatasetParserMain {
         // System.out.println("--------------");
         // dsParser.findDescription("Leaf Collection Areas");
         // System.out.println("--------------");
+        // System.out.println("(* Trying a keyword that should bring no results *)");
         // dsParser.findDescription("unicorns"); // this should fail
         // System.out.println("--------------");
         // dsParser.matchKeyword("water");
         // System.out.println("--------------");
+        // System.out.println("(* Trying a keyword that should yield no results *)");
+        // dsParser.matchKeyword("randomkeywordthatshouldnotmatchanything"); // this should fail
+        // System.out.println("--------------"); 
         // dsParser.matchKeywordUnderTopic("housing", "Budget / Finance");
         // System.out.println("--------------");
-        // dsParser.findAllTags("Circuit Map");
+        // System.out.println("(* Trying a keyword that should yield no results *)");
+        // dsParser.matchKeyword("randomkeywordthatshouldnotmatchanything"); // this should fail
         // System.out.println("--------------");
-        // dsParser.findOrganizationAndPrintOthers("Vision Zero High Injury Network");
+        // dsParser.findAllTags("Census Blocks");
+        // System.out.println("--------------");
+        // dsParser.findOrganizationAndPrintOthers("Instore Forgivable Loan Program");
         // System.out.println("--------------");
 
         DatasetParser dsparse = new DatasetParser();
