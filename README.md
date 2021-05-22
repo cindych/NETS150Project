@@ -20,33 +20,33 @@ Use OpenDataPhilly Search+ via the DatasetParserMain class. Users can uncomment 
 #### **Methods With Inputs**
 1. `findAllTopics`: finds all the topics that a specific data set covers
                 
-2. `getSetsCreatedAtDate`: goes through the landing pages of the datasets within the specific topic requested and tells you which were created on the day specified. 
+2. `getSetsCreatedAtDate`: goes through the landing pages of the datasets within the specific topic requested and tells you which were created on the day specified
                 
 3. `getNumDatasetsContributed`: gives user the number of datasets the organization they entered has contributed to OpenDataPhilly.org
             
-4. `getNumDatasetsinTopic`: gives the user the number of datasets the topic entered has classified under it.
+4. `getNumDatasetsinTopic`: gives the user the number of datasets the topic entered has classified under it
 
-5. `listSetsInTopics`: prints out all datasets under a specific topic and returns list of datasets.
+5. `listSetsInTopics`: prints out all datasets under a specific topic and returns list of datasets
     * Note: inputted topic must have same punctuation and capitalization as on page
                 
-6. `findDescription`: prints out the description of a specified dataset. Prints an error message if the dataset is not found.
+6. `findDescription`: prints out the description of a specified dataset. Prints an error message if the dataset is not found
     * Note: inputted dataset must be written the same as shown on site
 
-7. `matchKeyword`: prints out all datasets with a specific keyword in its title. Returns list of datasets.
+7. `matchKeyword`: prints out all datasets with a specific keyword in its title. Returns list of datasets
 
-8. `matchKeywordUnderTopic`: prints out all datasets with a specific keyword AND under a particular topic. Returns list of datasets. 
+8. `matchKeywordUnderTopic`: prints out all datasets with a specific keyword AND under a particular topic. Returns list of datasets
     * Note: inputted topic must have same punctuation and capitalization as on page
 
-9. `findAllTags`: prints the tags of a given dataset and returns a list of the tags. Prints an error message if the dataset is not found. 
+9. `findAllTags`: prints the tags of a given dataset and returns a list of the tags. Prints an error message if the dataset is not found
     * Note: inputted dataset must be written the same as shown on site
 
-10. `findOrganizationAndPrintOthers`: prints out the organization that published a specified dataset as well as other datasets published by the same organization. Returns list of the other datasets. Prints an error message if the dataset is not found. 
+10. `findOrganizationAndPrintOthers`: prints out the organization that published a specified dataset as well as other datasets published by the same organization. Returns list of the other datasets. Prints an error message if the dataset is not found
     * Note: inputted dataset must be written the same as shown on site
 
 #### **Inputless Methods**
-1. `getOrgMostDatasets`: gives the organization that has contributed/has attributed to the highest number of datasets.        
+1. `getOrgMostDatasets`: gives the organization that has contributed/has attributed to the highest number of datasets     
 
-2. `getTopicMostDatasets`: gives the topic with the highest number of datasets. 
+2. `getTopicMostDatasets`: gives the topic with the highest number of datasets
             
 3. `grabPartners`: returns the partners of OpenDataPhilly that are on the About page
 
